@@ -35,7 +35,7 @@ function getLatLong(stateVal, addressVal) {
         var baseUrl = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?`;
         var key="&key=AIzaSyBlqsxvTm23APcJur8ztY7Ul_4Bdl5Czjs";
         console.log(latLongVal.toString());
-        fetch (`${baseUrl}input=emergency+shelter&inputtype=textquery&locationbias=circle:5000@${latLongVal}${key}`)
+        fetch (`${baseUrl}input=emergency+shelter&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&locationbias=circle:5000@${latLongVal}${key}`)
         .then(response => {
             if (response.ok) {
                 return response.json();
