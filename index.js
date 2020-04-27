@@ -102,14 +102,24 @@ function displayResultsWeather(weatherData) {
             $('.weatherAlert').append(`<h3>There are no Weather Alerts at this time</h3>`);
         }
     }
-    
-
 
     $('.results').removeClass('hidden');
 }
 
+function show(sectionButton, sectionSelector) {
+    $('.navbar').on('click', sectionButton, function() {
+        event.preventDefault();
+        //console.log(sectionButton + ' button clicked');
+        $('.content').hide();
+        $(sectionSelector).fadeIn();
+        window.scrollTo(0, 0);
+    })
+}
 
 $(function() {
     console.log('App is loaded! Please submit value.');
     watchForm();
   });
+
+  show('.weatherAlertButton', '.weatherAlert')
+  show('.shelterButton', '.shelter')
