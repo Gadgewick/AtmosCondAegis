@@ -8,6 +8,8 @@ function watchForm() {
         var addressVal = $(`#address`).val()
         console.log(stateVal);
         console.log(addressVal);
+        $('.shelter').hide();
+        $('.weatherAlert').show();
         getWeatherAlert(stateVal);
         getLatLong(stateVal,addressVal)
     })
@@ -112,7 +114,6 @@ function show(sectionButton, sectionSelector) {
         //console.log(sectionButton + ' button clicked');
         $('.content').hide();
         $(sectionSelector).fadeIn();
-        window.scrollTo(0, 0);
     })
 }
 
