@@ -16,7 +16,7 @@ function watchForm() {
 function getLatLong(stateVal, addressVal) {
     var key="&key=AIzaSyBlqsxvTm23APcJur8ztY7Ul_4Bdl5Czjs";
     var baseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=";
-    var addressEncode = addressVal.replace(' ', '+');
+    var addressEncode = addressVal.split(' ').join('+');
     fetch (`${baseUrl}${addressEncode}+${stateVal}${key}`)
     .then(response => {
         if (response.ok) {
@@ -35,7 +35,7 @@ function getShelterLocation(geoData) {
     var latLongVal = Object.values(latLong).toString();
     var baseUrl = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?`;
     var key="&key=AIzaSyBlqsxvTm23APcJur8ztY7Ul_4Bdl5Czjs";
-    console.log(latLongVal.toString());
+    console.log(latLongVal);
     fetch (`${baseUrl}input=emergency+shelter&inputtype=textquery&fields=formatted_address,name,geometry&locationbias=circle:5000@${latLongVal}${key}`)
     .then(response => {
         if (response.ok) {
@@ -53,15 +53,14 @@ function createResultsShelterBox(shelterLocationData) {
     console.log(data);
     var placeName = data.name;
     var placeAddress = data.formatted_address;
-    var geoCodeForMapPic = data.geometry.location;
-    var latLong = Object.value(geoCodeForMapPic).toString();
+    var geoCodeForMapPic = placeAddress.split(' ').join('+').replace(/,/g, '');
     var baseUrl = `https://maps.googleapis.com/maps/api/staticmap?`;
     var key="&key=AIzaSyBlqsxvTm23APcJur8ztY7Ul_4Bdl5Czjs";
-    console.log(latLong);
-    fetch (`${baseUrl}center=${latLong}&zoom=17&size=500x400${key}`)
+    console.log(geoCodeForMapPic);
+    fetch (`${baseUrl}center=${geoCodeForMapPic}&zoom=17&size=500x400&markers=${geoCodeForMapPic}${key}`)
     .then(response => {
         if (response.ok) {
-            return response.json();
+            return response.blob();
         }
         throw new Error(response.statusText);
     })
@@ -69,6 +68,13 @@ function createResultsShelterBox(shelterLocationData) {
     .catch(error => $('.js-error-message').text(`Something went wrong: ${error.message}`)
     )};
         
+function displayShelterResults(miniMap, placeName, placeAddress) {
+    console.log(miniMap,placeName,placeAddress);
+    let img = document.createElement('img');
+    $('.shelter').append(img);
+    $('.shelter').append(`<h1 class="blockTitle">${placeName}</h1><h3 class="mainBodyText">${placeAddress}</h3>`);
+    img.src = URL.createObjectURL(miniMap);
+}
 
 
 function getWeatherAlert(stateVal) {
