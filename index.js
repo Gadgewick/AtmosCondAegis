@@ -11,33 +11,37 @@ function watchForm() {
         $('.shelter').hide();
         $('.weatherAlert').show();
         getWeatherAlert(stateVal);
-        initMap(stateVal,addressVal)
+        getLatLng(stateVal,addressVal)
     })
 }
 
-/*function getLatLong(stateVal, addressVal) {
-    var key="&key=AIzaSyBlqsxvTm23APcJur8ztY7Ul_4Bdl5Czjs";
-    var baseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=";
-    var addressEncode = addressVal.split(' ').join('+');
-    fetch (`${baseUrl}${addressEncode}+${stateVal}${key}`)
-    .then(response => {
+function getLatLng(stateVal, addressVal) {
+    var encodeAddressVal= addressVal.replace(" ", "+");
+    var key= "AIzaSyBlqsxvTm23APcJur8ztY7Ul_4Bdl5Czjs";
+    var url= `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeAddressVal}+${stateVal}&key=${key}`;
+    fetch(url) 
+    .then (response => {
         if (response.ok) {
             return response.json();
         }
         throw new Error(response.statusText);
+
     })
-    .then(geoData => initMap(geoData))
-    .catch(error => $('.js-error-message').text(`Something went wrong: ${error.message}`)
-)};
-*/
+    .then(latLng => initMap(latLng))
+    .catch(error => $('.js-error-message').text(`Something went wrong: ${error.message}`)) 
+}
+
+
 var map, infowindow;
 
-function initMap(stateVal, addressVal) {
-
+function initMap(latLng) {
+var latLngArray= latLng.results[0].geometry.location;
+console.log(latLngArray);
   
   var request = {
-    query: `emergency shelter ${addressVal} ${stateVal}`,
+    query: `emergency+shelter`,
     fields: ['name', 'formatted_address', 'geometry'],
+    locationBias: latLngArray
   };
   var mapCenter= {
       lat: 0,
@@ -78,56 +82,6 @@ function createMarker(place) {
 }
 
 
-
-/*function getShelterLocation(geoData) {
-    console.log(geoData);
-    
-    var latLongVal = Object.values(latLong).toString();
-    var baseUrl = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?`;
-    var key="&key=AIzaSyBlqsxvTm23APcJur8ztY7Ul_4Bdl5Czjs";
-    console.log(latLongVal);
-    var myRequest = new Request (`${baseUrl}input=emergency+shelter&inputtype=textquery&fields=formatted_address,name,geometry&locationbias=circle:5000@${latLongVal}${key}`);
-    var myMode = myRequest.mode;
-    console.log(myMode);
-    fetch (`${baseUrl}input=emergency+shelter&inputtype=textquery&fields=formatted_address,name,geometry&locationbias=circle:5000@${latLongVal}${key}`)
-    .then(response => {
-        if (response.ok) {
-            console.log("success")
-            return response.json();
-        }
-        throw new Error(response.statusText);
-    })
-    .then(shelterLocationData => createResultsShelterBox(shelterLocationData))
-    .catch(error => $('.js-error-message').text(`Something went wrong: ${error.message}`)
-)};
-
-
-function createResultsShelterBox(place) {
-    var placeName = place.name;
-    var placeAddress = place.formatted_address;
-    var geoCodeForMapPic = placeAddress.split(' ').join('+').replace(/,/g, '');
-    var baseUrl = `https://maps.googleapis.com/maps/api/staticmap?`;
-    var key="&key=AIzaSyBlqsxvTm23APcJur8ztY7Ul_4Bdl5Czjs";
-    console.log(geoCodeForMapPic);
-    fetch (`${baseUrl}center=${geoCodeForMapPic}&zoom=17&size=500x400&markers=${geoCodeForMapPic}${key}`)
-    .then(response => {
-        if (response.ok) {
-            return response.blob();
-        }
-        throw new Error(response.statusText);
-    })
-    .then(miniMap => displayShelterResults(miniMap, placeName, placeAddress))
-    .catch(error => $('.js-error-message').text(`Something went wrong: ${error.message}`)
-    )};
-        
-function displayShelterResults(miniMap, placeName, placeAddress) {
-    console.log(miniMap,placeName,placeAddress);
-    let img = document.createElement('img');
-    $('.shelter').append(img);
-    $('.shelter').append(`<h1 class="blockTitle">${placeName}</h1><h3 class="mainBodyText">${placeAddress}</h3>`);
-    img.src = URL.createObjectURL(miniMap);
-}
-*/
 
 function getWeatherAlert(stateVal) {
     var baseUrl = "https://api.weather.gov/alerts/active/area/";
