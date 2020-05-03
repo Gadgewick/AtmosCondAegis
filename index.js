@@ -65,6 +65,7 @@ var service = new google.maps.places.PlacesService(map);
         createMarker(place);
       }
       map.setCenter(results[0].geometry.location);
+    
     }
 });
 }
@@ -76,7 +77,8 @@ function createMarker(place) {
     });
 
     google.maps.event.addListener(marker, 'click', function() {
-      infowindow.setContent(place.name);
+        var contentString= `<h3>${place.name}</h3><h4>${place.formatted_address}</h4>`;
+      infowindow.setContent(contentString);
       infowindow.open(map, this);
     });
 }
