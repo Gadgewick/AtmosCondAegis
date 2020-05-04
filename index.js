@@ -28,7 +28,7 @@ function getLatLng(stateVal, addressVal) {
 
     })
     .then(latLng => initMap(latLng))
-    .catch(error => $('.js-error-message').text(`Something went wrong: ${error.message}`)) 
+    .catch(error => $('.js-error-message').text(`No results found`)) 
 }
 
 
@@ -95,7 +95,7 @@ function getWeatherAlert(stateVal) {
         throw new Error(response.statusText);
     })
     .then(weatherData => displayResultsWeather(weatherData))
-    .catch(error => $('.js-error-message').text(`Something went wrong: ${error.message}`)
+    .catch(error => $('.js-error-message').text(`No results found`)
     )};
 
 function displayResultsWeather(weatherData) {
