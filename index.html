@@ -3,23 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="main.css">
     <title>Atmospheric Conditions Aegis</title>
 </head>
 
 <body>
-    <header>
-        <img src="images/fullLogo.png" alt="Atmospheric Conditions Aegis" class="logo">
-    </header>
-    <section>
 
-        <h3>Find Weather and Shelter near you</h3>
+    <section class="headlineSection">
+        <header>
+            <img src="images/fullLogo.png" alt="Atmospheric Conditions Aegis" class="logo">
+        </header>
+        <h3 class="titleText">Find Weather and Shelter</h3>
+        <nav class="navbar">
+            <a href="#" class="weatherAlertButton">Weather Alerts</a>
+            <a href="#" class="shelterButton">Nearby Shelter</a>
+        </nav>
     </section>
-    <section>
+    <section class="formSection">
         <form>
-            <label>City: </label><input id="address" type="text">
+            <label class="secondHeadlineText">City: </label><input id="address" type="text">
             <div id="stateSearch">
-                <label for="state">State:</label>
+                <label for="state" class="secondHeadlineText">State:</label>
                 <select class="state" name="state"><option value="---">---</option>
                     <option value="AL">Alabama</option>
                     <option value="AK">Alaska</option>
@@ -73,15 +79,12 @@
                     <option value="WI">Wisconsin</option>
                     <option value="WY">Wyoming</option>
                 </select>
-                <input type="submit" value="Search">
+                <input class="searchButton" type="submit" value="Search">
             </div>
         </form>
     </section>
     <section class="results hidden">
-        <nav class="navbar">
-            <a href="#" class="weatherAlertButton">Weather Alerts</a>
-            <a href="#" class="shelterButton">Nearby Shelter</a>
-        </nav>
+       
             <section class="weatherAlert content">
 
             </section>
