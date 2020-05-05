@@ -6,8 +6,6 @@ function watchForm() {
         $('.js-error-message').empty();
         var stateVal = document.getElementsByClassName("state")[0].value;
         var addressVal = $(`#address`).val()
-        console.log(stateVal);
-        console.log(addressVal);
         $('.shelter').hide();
         $('.weatherAlert').show();
         getWeatherAlert(stateVal);
@@ -36,8 +34,7 @@ var map, infowindow;
 
 function initMap(latLng) {
 var latLngArray= latLng.results[0].geometry.location;
-console.log(latLngArray);
-  
+
   var request = {
     query: `emergency+shelter`,
     fields: ['name', 'formatted_address', 'geometry'],
@@ -55,9 +52,7 @@ console.log(latLngArray);
   );
 
 var service = new google.maps.places.PlacesService(map);
-  console.log(service);
   service.findPlaceFromQuery(request, function(results, status) {
-      console.log(results);
     if (status === google.maps.places.PlacesServiceStatus.OK) {
       for (var i = 0; i < results.length; i++) {
         var place= results[i];
@@ -99,11 +94,8 @@ function getWeatherAlert(stateVal) {
     )};
 
 function displayResultsWeather(weatherData) {
-    console.log(weatherData);
     var weatherAlertList = weatherData.features;
     for (let i=0; i < weatherAlertList.length; i++) {
-        //console.log('outer loop iteration' + i);
-        //console.log(weatherAlertList[i].properties);
         if (weatherAlertList[i].properties) {
             $('.weatherAlert').append(`<h1 class="blockTitle">${weatherAlertList[i].properties.event}</h1><h4 class="otherBodyText">${weatherAlertList[i].properties.headline}</h4><h5>${weatherAlertList[i].properties.areaDesc}</h5><p>${weatherAlertList[i].properties.description}</p><p>${weatherAlertList[i].properties.instruction}</p>`);
         } else {
@@ -117,14 +109,30 @@ function displayResultsWeather(weatherData) {
 function show(sectionButton, sectionSelector) {
     $('.navbar').on('click', sectionButton, function() {
         event.preventDefault();
-        //console.log(sectionButton + ' button clicked');
         $('.content').hide();
         $(sectionSelector).fadeIn();
     })
 }
 
+function onReady(callback) {
+    var intervalId = window.setInterval(function() {
+      if (document.getElementsByTagName('body')[0] !== undefined) {
+        window.clearInterval(intervalId);
+        callback.call(this);
+      }
+    }, 1000);
+  }
+  
+  function setVisible(selector, visible) {
+    document.querySelector(selector).style.display = visible ? 'block' : 'none';
+  }
+  
+  onReady(function() {
+    setVisible('.results', true);
+    setVisible('#loading', false);
+  });
+
 $(function() {
-    console.log('App is loaded! Please submit value.');
     watchForm();
   });
 
