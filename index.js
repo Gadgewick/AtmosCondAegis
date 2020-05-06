@@ -98,22 +98,21 @@ function displayResultsWeather(weatherData) {
     for (let i=0; i < weatherAlertList.length; i++) {
         if (weatherAlertList[i].properties) {
             var countyVal= weatherAlertList[i].properties.areaDesc;
-            $('.county').append($(`<option val="${countyVal}">${countyVal}</option>`));
+            $('.county').append($(`<option class="countyInputOption" val="${countyVal}">${countyVal}</option>`));
             $('.weatherAlert').append(`<div id="${countyVal}" class="alertInfo"><h4 class="weatherText">${weatherAlertList[i].properties.headline}</h4><h5 class="countyText">${countyVal}</h5><p>${weatherAlertList[i].properties.description}</p><p>${weatherAlertList[i].properties.instruction}</p></div>`);
             var countyShow = (`#${countyVal}`);
             var countySelect = document.getElementsByClassName("county")[0].value;
-            countyDisplay(countySelect, countyShow);
+            //countyDisplay(countySelect, countyShow);
+            $(`#countyInput`).onchange = countyDisplay;
+            
         } else {
             $('.weatherAlert').append(`<h3>There are no Weather Alerts at this time</h3>`);
         }
     }
 
     function countyDisplay(countySelect, countyShow) {
-        $('#countyInput').on("change", countySelect, function() {
-            event.preventDefault();
-            $('.alertInfo').addClass('hidden');
-            $(countyShow).removeClass('hidden');
-        })
+            console.log(`${countySelect} was chosen`);
+        }
     }
 
     /*function displayResultsWeather(weatherData) {
@@ -125,10 +124,10 @@ function displayResultsWeather(weatherData) {
             } else {
                 $('.weatherAlert').append(`<h3>There are no Weather Alerts at this time</h3>`);
             }
-        }*/
+        }
 
     $('.results').removeClass('hidden');
-}
+}*/
 
 
 
@@ -168,7 +167,7 @@ function onReady(callback) {
 
   function watchScroll() {
       $(document).scroll(function() {
-          if (window.scrollY > 300) {
+          if (window.scrollY > 370) {
               $('.navbar').addClass('fixed');
               $('.topButton').removeClass('hidden');
           } else {

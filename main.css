@@ -169,6 +169,14 @@ nav a:hover {
 
 }
 
+#countyInput {
+  width:80%;
+}
+
+.countyInputOption {
+  width:80%;
+}
+
 #map {
     height: 400px;
     margin: 20px;
