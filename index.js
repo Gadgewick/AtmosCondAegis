@@ -1,11 +1,11 @@
 function watchForm() {
-    $('form').submit(event => {
+    $('.myButton').click(event => {
         event.preventDefault();
         $('.shelter').empty();
         $('.weatherAlert').empty();
         $('.js-error-message').empty();
         var stateVal = document.getElementsByClassName("state")[0].value;
-        var addressVal = $(`#address`).val()
+        var addressVal = $(`.city`).val()
         $('.shelter').hide();
         $('.weatherAlert').show();
         getWeatherAlert(stateVal);

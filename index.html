@@ -11,22 +11,22 @@
 
 <body>
 
-    <section class="headlineSection">
+    <section class="openingScreen">
         <header>
             <img src="images/fullLogo.png" alt="Atmospheric Conditions Aegis" class="logo">
         </header>
-        <h3 class="titleText">Find Weather and Shelter</h3>
-        <nav class="navbar">
-            <a href="#" class="weatherAlertButton">Weather Alerts</a>
-            <a href="#" class="shelterButton">Nearby Shelter</a>
-        </nav>
-    </section>
-    <section class="formSection">
-        <form>
-            <label class="secondHeadlineText">City: </label><input id="address" type="text">
-            <div id="stateSearch">
-                <label for="state" class="secondHeadlineText">State:</label>
-                <select class="state" name="state"><option value="---">---</option>
+        <div class="headlineSection">
+            <h3 class="titleText">Find Weather and Shelter</h3>
+            <nav class="navbar">
+                <a href="#" class="weatherAlertButton">Weather Alerts</a>
+                <a href="#" class="shelterButton">Nearby Shelter</a>
+            </nav>
+        </div>
+        <div class="formSection">
+            <form>
+                    <label class="secondHeadlineText">City: </label><input class="city input" type="text">
+                    <label for="state" class="secondHeadlineText">State:</label>
+                    <select class="state input" name="state"><option value="---">---</option>
                     <option value="AL">Alabama</option>
                     <option value="AK">Alaska</option>
                     <option value="AZ">Arizona</option>
@@ -78,10 +78,10 @@
                     <option value="WV">West Virginia</option>
                     <option value="WI">Wisconsin</option>
                     <option value="WY">Wyoming</option>
-                </select>
-                <input class="searchButton" type="submit" value="Search">
-            </div>
-        </form>
+                    </select>
+                    <a href="#" class="myButton" type="submit">Find</a>
+            </form>
+        </div>
     </section>
     <section class="results hidden">
        

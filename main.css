@@ -16,25 +16,46 @@
   padding: 10px;
 }
 
-.headlineSection {
+.openingScreen {
   background-color: #4D5061;
-  background-image: url("images/cloud.png");
+  background-image: url("images/cloudBig.png");
   background-repeat: no-repeat;
-  background-size: 100%;
-  
-  padding: 10px;
+  background-position: center;
+  width: 100%;
+  background-size: cover;
+  height: 2000px;
 }
 
-.headLineSection::before {
-  background-image: url("images/cloud.png");
-  background-repeat: no-repeat;
-  background-size: 100%;
-  opacity: .35;
+.headlineSection {
+  padding: 10px;
 }
 
 .formSection {
   background-color: #E9EDDE;
-  padding: 10px;
+  padding: 40px 35px 35px 35px;
+  height: 150px;
+  width: 100%;
+  margin: 0px;
+  display: inline-block;
+  text-align: center;
+}
+
+.input {
+  box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+  background-color:#ffffff;
+  margin-top: 15px;
+  margin-left: 5px;
+  margin-right: 12px;
+  border-radius:6px;
+  border:1px solid #dcdcdc;
+  cursor:pointer;
+  padding:6px 24px;
+}
+
+.input:hover {
+	background:linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+	background-color:#f6f6f6;
 }
 
 .navbar a {
@@ -70,9 +91,31 @@ nav a:hover {
   margin-top: 0px;
 }
 
-.searchButton {
-  background-color: #4D5061;
-  color: #E9EDDE;
+.myButton {
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+	background-color:#ffffff;
+	border-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	cursor:pointer;
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 700;
+  color: #4D5061;
+	font-size:16px;
+  padding:1px 24px 3px;
+  margin-left: 5px;
+  margin-top: 15px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+}
+.myButton:hover {
+	background:linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+	background-color:#f6f6f6;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
 }
 
 #map {
