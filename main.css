@@ -23,7 +23,7 @@
   background-position: center;
   width: 100%;
   background-size: cover;
-  height: 2000px;
+  height: 800px;
 }
 
 .headlineSection {
@@ -66,10 +66,24 @@
   font-style: normal;
   color: #E9EDDE;
   padding-right: 20px;
+  padding-left: 20px;
 }
 
 nav a:hover {
   color: #FAFF81;
+}
+
+.navbar{
+  background-color: #3D3B30;
+  padding: 10px;
+  width: 100%;
+}
+
+.fixed {
+  position: fixed;
+  top: 0px;
+  margin-top: 0;
+	z-index: 1000;
 }
 
 .bodyText {

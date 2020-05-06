@@ -132,7 +132,18 @@ function onReady(callback) {
     setVisible('#loading', false);
   });
 
+  function watchScroll() {
+      $(document).scroll(function() {
+          if (window.scrollY > 300) {
+              $('.navbar').addClass('fixed');
+          } else {
+          $('.navbar').removeClass('fixed');
+        }
+      })
+  }
+
 $(function() {
+    watchScroll();
     watchForm();
   });
 
