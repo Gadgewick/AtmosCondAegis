@@ -78,7 +78,7 @@ function createMarker(place) {
     });
 }
 
-
+//weather section
 
 function getWeatherAlert(stateVal) {
     var baseUrl = "https://api.weather.gov/alerts/active/area/";
@@ -97,13 +97,47 @@ function displayResultsWeather(weatherData) {
     var weatherAlertList = weatherData.features;
     for (let i=0; i < weatherAlertList.length; i++) {
         if (weatherAlertList[i].properties) {
-            $('.weatherAlert').append(`<h1 class="blockTitle">${weatherAlertList[i].properties.event}</h1><h4 class="otherBodyText">${weatherAlertList[i].properties.headline}</h4><h5>${weatherAlertList[i].properties.areaDesc}</h5><p>${weatherAlertList[i].properties.description}</p><p>${weatherAlertList[i].properties.instruction}</p>`);
+            var countyVal= weatherAlertList[i].properties.areaDesc;
+            $('.county').append($(`<option val="${countyVal}">${countyVal}</option>`));
+            $('.weatherAlert').append(`<div id="${countyVal}" class="alertInfo"><h4 class="weatherText">${weatherAlertList[i].properties.headline}</h4><h5 class="countyText">${countyVal}</h5><p>${weatherAlertList[i].properties.description}</p><p>${weatherAlertList[i].properties.instruction}</p></div>`);
+            var countyShow = (`#${countyVal}`);
+            var countySelect = document.getElementsByClassName("county")[0].value;
+            countyDisplay(countySelect, countyShow);
         } else {
             $('.weatherAlert').append(`<h3>There are no Weather Alerts at this time</h3>`);
         }
     }
 
+    function countyDisplay(countySelect, countyShow) {
+        $('#countyInput').on("change", countySelect, function() {
+            event.preventDefault();
+            $('.alertInfo').addClass('hidden');
+            $(countyShow).removeClass('hidden');
+        })
+    }
+
+    /*function displayResultsWeather(weatherData) {
+        var weatherAlertList = weatherData.features;
+        for (let i=0; i < weatherAlertList.length; i++) {
+            if (weatherAlertList[i].properties) {
+                `<option value="AL">${weatherAlertList[i].properties.areaDesc}</option>`
+                $('.weatherAlert').append(`<h1 class="blockTitle">${weatherAlertList[i].properties.event}</h1><h4 class="otherBodyText">${weatherAlertList[i].properties.headline}</h4><h5>${weatherAlertList[i].properties.areaDesc}</h5><p>${weatherAlertList[i].properties.description}</p><p>${weatherAlertList[i].properties.instruction}</p>`);
+            } else {
+                $('.weatherAlert').append(`<h3>There are no Weather Alerts at this time</h3>`);
+            }
+        }*/
+
     $('.results').removeClass('hidden');
+}
+
+
+
+function backToTop() {
+    $('.navbar').on('click', $('.topButton'), function() {
+        event.preventDefault();
+        $(document.body).animate({scrollTop: 0}, "slow");
+        return false;
+    })
 }
 
 function show(sectionButton, sectionSelector) {
@@ -136,8 +170,10 @@ function onReady(callback) {
       $(document).scroll(function() {
           if (window.scrollY > 300) {
               $('.navbar').addClass('fixed');
+              $('.topButton').removeClass('hidden');
           } else {
           $('.navbar').removeClass('fixed');
+          $('.topButton').addClass('hidden');
         }
       })
   }

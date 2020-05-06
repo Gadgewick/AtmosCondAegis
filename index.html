@@ -82,12 +82,16 @@
             <nav>
                 <a href="#" class="weatherAlertButton">Weather Alerts</a>
                 <a href="#" class="shelterButton">Nearby Shelter</a>
+                <a href="#" class="topButton hidden">Back to Search</a>
             </nav>
         </div>
     </section>
     <section class="results hidden">
-       
+       <select class="county input" id="countyInput" name="county">
+            <option value="---">---</option>
+        </select>
             <section class="weatherAlert content">
+                
 
             </section>
             <section id ="map" class="shelter content hidden">
@@ -100,5 +104,5 @@
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlqsxvTm23APcJur8ztY7Ul_4Bdl5Czjs&libraries=places"></script>
     <script src="index.js"></script>
 </body>
-<footer><p></p></footer>
+<footer><p>© 2020 Copyright: Philip Orvis</p></footer>
 </html>

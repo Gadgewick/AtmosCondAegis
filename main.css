@@ -4,7 +4,9 @@
   padding: 0;
 }
 
-
+body {  
+  background-color: #E9EDDE;
+}
 
 .hidden {
     display: none;
@@ -132,8 +134,44 @@ nav a:hover {
 	top:1px;
 }
 
+.alertInfo {
+  padding: 20px;
+}
+
+.alertInfo p {
+  font-family: 'Roboto', sans-serif;
+  color: #3D3B30;
+  margin-bottom: 12px;
+  font-size: 12px;
+}
+
+.weatherText {
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 700;
+  color: #5C80BC;
+  margin-bottom: 12px;
+  font-size: 18px;
+}
+
+.countyText {
+  font-family: 'Roboto', sans-serif;
+  color: #3D3B30;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.results {
+  background-color: #E9EDDE;
+}
+
+.county {
+  margin: 20px;
+
+}
+
 #map {
     height: 400px;
+    margin: 20px;
 }
 
 #loading {
@@ -148,4 +186,17 @@ nav a:hover {
     background-image: url("https://i.stack.imgur.com/MnyxU.gif");
     background-repeat: no-repeat;
     background-position: center;
+}
+
+footer {
+  background-color: #3D3B30;
+  padding: 10px;
+  color: #E9EDDE;
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+footer p {
+  margin-left: 20px;
 }
