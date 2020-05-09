@@ -1,12 +1,20 @@
+const STORE = [1,2,3,4];
+
+function clearSTORE() {
+    STORE.length = 0;
+}
+
 function watchForm() {
     $('.myButton').click(event => {
         event.preventDefault();
         $('.shelter').empty();
         $('.weatherAlert').empty();
         $('.js-error-message').empty();
+        clearSTORE();
         var stateVal = document.getElementsByClassName("state")[0].value;
         var addressVal = $(`.city`).val()
         $('.shelter').hide();
+        $('#countyInput').show();
         $('.weatherAlert').show();
         getWeatherAlert(stateVal);
         getLatLng(stateVal,addressVal)
@@ -95,27 +103,72 @@ function getWeatherAlert(stateVal) {
 
 function displayResultsWeather(weatherData) {
     var weatherAlertList = weatherData.features;
+    console.log(weatherAlertList);
     for (let i=0; i < weatherAlertList.length; i++) {
         if (weatherAlertList[i].properties) {
-            var countyVal= weatherAlertList[i].properties.areaDesc;
-            $('.county').append($(`<option class="countyInputOption" val="${countyVal}">${countyVal}</option>`));
-            $('.weatherAlert').append(`<div id="${countyVal}" class="alertInfo"><h4 class="weatherText">${weatherAlertList[i].properties.headline}</h4><h5 class="countyText">${countyVal}</h5><p>${weatherAlertList[i].properties.description}</p><p>${weatherAlertList[i].properties.instruction}</p></div>`);
-            var countyShow = (`#${countyVal}`);
-            var countySelect = document.getElementsByClassName("county")[0].value;
-            //countyDisplay(countySelect, countyShow);
-            $(`#countyInput`).onchange = countyDisplay;
+            var countyValArray= weatherAlertList[i].properties.areaDesc.split(';');
+            console.log(countyValArray);
+            infoArray = i;
+            for (let j = 0; j < countyValArray.length; j++) {
+                    STORE.push({
+                    county : countyValArray[j],
+                    headline : weatherAlertList[i].properties.headline,
+                    description : weatherAlertList[i].properties.description,
+                    instruction : weatherAlertList[i].properties.instruction
+                });
+
+            //var weatherAlertGenerator = `<h1 class="secondHeadlineText">${STORE[infoArray].headline}</h1><p class"alertInfo">${STORE[infoArray].description}</p><p class"alertInfo">${STORE[infoArray].instruction}</p>`;
             
+            //$('.weatherAlert').replaceWith(weatherAlertGenerator);
+            //var countySelect = document.getElementsByClassName("county")[0].value;
+            //countyDisplay(countySelect, countyShow);
+            }
+            console.log(STORE);
         } else {
             $('.weatherAlert').append(`<h3>There are no Weather Alerts at this time</h3>`);
         }
+        
     }
 
-    function countyDisplay(countySelect, countyShow) {
-            console.log(`${countySelect} was chosen`);
+    countySearch();
+}
+
+function countySearch() {
+    for (let i=0; i < STORE.length; i++) {
+        var countyIndex = i;
+        var infoID= STORE[countyIndex].county;
+        $('.county').append($(`<option class="countyInputOption" val="${infoID}">${infoID}</option>`));
+        var weatherAlertGenerator = `<div class="alertInfo hidden" id="${infoID}"><h1 class="secondHeadlineText">${STORE[countyIndex].headline}</h1><p>${STORE[countyIndex].description}</p><p>${STORE[countyIndex].instruction}</p></div>`;
+        $('.weatherAlert').append(weatherAlertGenerator);
+    };
+
+        $(`#countyInput`).change(function() {
+            var countySelected = $("#countyInput option:selected").val();
+            console.log(countySelected);
+                if(countySelected) {
+                    $(".alertInfo").not("#" +countySelected).hide();
+                    $("#" +countySelected).show();
+                } else{
+                    $(".alertInfo").hide();
+                }
+            })
+            /*var countySelected = $("#countyInput option:selected").val();
+            console.log(countySelected);
+            var alertByCountyShow = document.getElementsByClassName('weatherAlert');
+            console.log(alertByCountyShow);*/
+    
+        }
+
+
+    
+    
+
+     /*function countyDisplay(countyShow) {
+            console.log(`${countyShow} was chosen`);
         }
     }
 
-    /*function displayResultsWeather(weatherData) {
+   function displayResultsWeather(weatherData) {
         var weatherAlertList = weatherData.features;
         for (let i=0; i < weatherAlertList.length; i++) {
             if (weatherAlertList[i].properties) {

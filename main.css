@@ -12,6 +12,10 @@ body {
     display: none;
   }
 
+.notHidden {
+  display: block;
+}
+
 .logo {
   width: 30%;
   min-width: 200px;
