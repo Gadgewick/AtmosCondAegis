@@ -129,7 +129,7 @@ function displayResultsWeather(weatherData) {
 }
 
 function countySearch() {
-    $('.county').append($(`<option value="---">---</option>`));
+    $('.county').append($(`<option value="County_Select">County Select</option>`));
     for (let i=0; i < STORE.length; i++) {
         var countyIndex = i;
         var infoID= STORE[countyIndex].county;
@@ -153,13 +153,6 @@ function countySearch() {
         })
     
 }
-
-
-    
-    
-
-
-
 
 function backToTop() {
     $('.navbar').on('click', $('.topButton'), function() {
