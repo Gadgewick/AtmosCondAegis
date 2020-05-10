@@ -1,3 +1,5 @@
+//Core JS
+
 const STORE = [1,2,3,4];
 
 function clearSTORE() {
@@ -12,8 +14,8 @@ function watchForm() {
         $('.weatherAlert').empty();
         $('.js-error-message').empty();
         clearSTORE();
-        var stateVal = document.getElementsByClassName("state")[0].value;
-        var addressVal = $(`.city`).val()
+        const stateVal = document.getElementsByClassName("state")[0].value;
+        const addressVal = $(`.city`).val()
         $('.shelter').hide();
         $('#countyInput').show();
         $('.weatherAlert').show();
@@ -22,10 +24,12 @@ function watchForm() {
     })
 }
 
+
+//Shelter Section
 function getLatLng(stateVal, addressVal) {
-    var encodeAddressVal= addressVal.replace(" ", "+");
-    var key= "AIzaSyBlqsxvTm23APcJur8ztY7Ul_4Bdl5Czjs";
-    var url= `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeAddressVal}+${stateVal}&key=${key}`;
+    const encodeAddressVal= addressVal.replace(" ", "+");
+    const key= "AIzaSyBlqsxvTm23APcJur8ztY7Ul_4Bdl5Czjs";
+    const url= `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeAddressVal}+${stateVal}&key=${key}`;
     fetch(url) 
     .then (response => {
         if (response.ok) {
@@ -42,14 +46,14 @@ function getLatLng(stateVal, addressVal) {
 var map, infowindow;
 
 function initMap(latLng) {
-var latLngArray= latLng.results[0].geometry.location;
+const latLngArray= latLng.results[0].geometry.location;
 
-  var request = {
+  const request = {
     query: `emergency+shelter`,
     fields: ['name', 'formatted_address', 'geometry'],
     locationBias: latLngArray
   };
-  var mapCenter= {
+  const mapCenter= {
       lat: 0,
       lng: 130
   };
@@ -60,11 +64,11 @@ var latLngArray= latLng.results[0].geometry.location;
       document.getElementById('map'), {center: mapCenter, zoom: 15}
   );
 
-var service = new google.maps.places.PlacesService(map);
+const service = new google.maps.places.PlacesService(map);
   service.findPlaceFromQuery(request, function(results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
-      for (var i = 0; i < results.length; i++) {
-        var place= results[i];
+      for (let i = 0; i < results.length; i++) {
+        const place= results[i];
 
         createMarker(place);
       }
@@ -75,22 +79,22 @@ var service = new google.maps.places.PlacesService(map);
 }
 
 function createMarker(place) {
-    var marker = new google.maps.Marker({
+    const marker = new google.maps.Marker({
       map: map,
       position: place.geometry.location
     });
 
     google.maps.event.addListener(marker, 'click', function() {
-        var contentString= `<h3>${place.name}</h3><h4>${place.formatted_address}</h4>`;
+        const contentString= `<h3>${place.name}</h3><h4>${place.formatted_address}</h4>`;
       infowindow.setContent(contentString);
       infowindow.open(map, this);
     });
 }
 
-//weather section
+//Weather Section
 
 function getWeatherAlert(stateVal) {
-    var baseUrl = "https://api.weather.gov/alerts/active/area/";
+    const baseUrl = "https://api.weather.gov/alerts/active/area/";
     fetch (`${baseUrl}/${stateVal}`)
     .then(response => {
         if (response.ok) {
@@ -103,12 +107,10 @@ function getWeatherAlert(stateVal) {
     )};
 
 function displayResultsWeather(weatherData) {
-    var weatherAlertList = weatherData.features;
-    console.log(weatherAlertList);
+    const weatherAlertList = weatherData.features;
     for (let i=0; i < weatherAlertList.length; i++) {
         if (weatherAlertList[i].properties) {
-            var countyValArray= weatherAlertList[i].properties.areaDesc.split(';');
-            console.log(countyValArray);
+            const countyValArray= weatherAlertList[i].properties.areaDesc.split(';');
             infoArray = i;
             for (let j = 0; j < countyValArray.length; j++) {
                     STORE.push({
@@ -118,7 +120,6 @@ function displayResultsWeather(weatherData) {
                     instruction : weatherAlertList[i].properties.instruction
                 });
             }
-            console.log(STORE);
         } else {
             $('.weatherAlert').append(`<h3>There are no Weather Alerts at this time</h3>`);
         }
@@ -131,19 +132,16 @@ function displayResultsWeather(weatherData) {
 function countySearch() {
     $('.county').append($(`<option value="County_Select">County Select</option>`));
     for (let i=0; i < STORE.length; i++) {
-        var countyIndex = i;
-        var infoID= STORE[countyIndex].county;
+        const countyIndex = i;
+        const infoID= STORE[countyIndex].county;
         $('.county').append($(`<option class="countyInputOption" val="${infoID.replace(/\s/g, '')}">${infoID}</option>`));
-        var weatherAlertGenerator = `<div class="alertInfo hidden" id="${infoID.replace(/\s/g, '')}"><h1 class="secondHeadlineText">${STORE[countyIndex].headline}</h1><p>${STORE[countyIndex].description}</p><p>${STORE[countyIndex].instruction}</p></div>`;
+        const weatherAlertGenerator = `<div class="alertInfo hidden" id="${infoID.replace(/\s/g, '')}"><h1 class="weatherText">${STORE[countyIndex].headline}</h1><p>${STORE[countyIndex].description}</p><p>${STORE[countyIndex].instruction}</p></div>`;
         $('.weatherAlert').append(weatherAlertGenerator);
-        console.log(infoID.replace(/\s/g, ''));
     };
         $('.alertInfo').hide();
         $(`#countyInput`).change(function() {
-            var countySelected = $("#countyInput option:selected").val().replace(/\s/g, '');
-            console.log(countySelected);
-            var weatherShow = document.getElementById(`${countySelected}`);
-            console.log(weatherShow);
+            const countySelected = $("#countyInput option:selected").val().replace(/\s/g, '');
+            const weatherShow = document.getElementById(`${countySelected}`);
                 if(countySelected) {
                     $(".alertInfo").hide();
                     $(weatherShow).show();
@@ -154,6 +152,7 @@ function countySearch() {
     
 }
 
+//Nav element
 function backToTop() {
     $('.navbar').on('click', $('.topButton'), function() {
         event.preventDefault();
@@ -170,8 +169,22 @@ function show(sectionButton, sectionSelector) {
     })
 }
 
+
+function watchScroll() {
+    $(document).scroll(function() {
+        if (window.scrollY > 370) {
+            $('.navbar').addClass('fixed');
+            $('.topButton').removeClass('hidden');
+        } else {
+        $('.navbar').removeClass('fixed');
+        $('.topButton').addClass('hidden');
+      }
+    })
+}
+
+//Load screen
 function onReady(callback) {
-    var intervalId = window.setInterval(function() {
+    const intervalId = window.setInterval(function() {
       if (document.getElementsByTagName('body')[0] !== undefined) {
         window.clearInterval(intervalId);
         callback.call(this);
@@ -188,17 +201,7 @@ function onReady(callback) {
     setVisible('#loading', false);
   });
 
-  function watchScroll() {
-      $(document).scroll(function() {
-          if (window.scrollY > 370) {
-              $('.navbar').addClass('fixed');
-              $('.topButton').removeClass('hidden');
-          } else {
-          $('.navbar').removeClass('fixed');
-          $('.topButton').addClass('hidden');
-        }
-      })
-  }
+ //functions that are called
 
 $(function() {
     watchScroll();
