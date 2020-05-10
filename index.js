@@ -29,6 +29,7 @@ function watchForm() {
 function getLatLng(stateVal, addressVal) {
     const encodeAddressVal= addressVal.replace(" ", "+");
     const key= "AIzaSyBlqsxvTm23APcJur8ztY7Ul_4Bdl5Czjs";
+    //GET geocode data fom Google Geocode
     const url= `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeAddressVal}+${stateVal}&key=${key}`;
     fetch(url) 
     .then (response => {
@@ -44,7 +45,7 @@ function getLatLng(stateVal, addressVal) {
 
 
 var map, infowindow;
-
+//Using the client side Places Library to search for our query using the geocode location 
 function initMap(latLng) {
 const latLngArray= latLng.results[0].geometry.location;
 
@@ -94,6 +95,7 @@ function createMarker(place) {
 //Weather Section
 
 function getWeatherAlert(stateVal) {
+    //GET from the National Weather Service API
     const baseUrl = "https://api.weather.gov/alerts/active/area/";
     fetch (`${baseUrl}/${stateVal}`)
     .then(response => {
