@@ -131,6 +131,7 @@ function displayResultsWeather(weatherData) {
 
 function countySearch() {
     $('.county').append($(`<option value="County_Select">County Select</option>`));
+    $('.weatherAlert').append(`<div class="alertInfo"><h1 class="weatherText">If no counties are selectable in the drop down menu that means there are no weather warnings at this time.</h1></div>`);
     for (let i=0; i < STORE.length; i++) {
         const countyIndex = i;
         const infoID= STORE[countyIndex].county;
@@ -138,7 +139,7 @@ function countySearch() {
         const weatherAlertGenerator = `<div class="alertInfo hidden" id="${infoID.replace(/\s/g, '')}"><h1 class="weatherText">${STORE[countyIndex].headline}</h1><p>${STORE[countyIndex].description}</p><p>${STORE[countyIndex].instruction}</p></div>`;
         $('.weatherAlert').append(weatherAlertGenerator);
     };
-        $('.alertInfo').hide();
+        
         $(`#countyInput`).change(function() {
             const countySelected = $("#countyInput option:selected").val().replace(/\s/g, '');
             const weatherShow = document.getElementById(`${countySelected}`);
