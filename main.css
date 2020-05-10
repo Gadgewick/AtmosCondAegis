@@ -144,6 +144,8 @@ nav a:hover {
   color: #3D3B30;
   margin-bottom: 12px;
   font-size: 12px;
+  letter-spacing: 1px;
+  line-height: 1.8em;
 }
 
 .weatherText {

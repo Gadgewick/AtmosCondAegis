@@ -137,9 +137,14 @@ function countySearch() {
     for (let i=0; i < STORE.length; i++) {
         const countyIndex = i;
         const infoID= STORE[countyIndex].county;
+        var countyDesc = STORE[countyIndex].description;
+        countyDesc = countyDesc.replace(/\*/g, "<br>");
+        //countyDesc= countyDesc.replace(/\./g, ".  ");
+        countyDesc = countyDesc.replace("null", "");
+        var countyInst = STORE[countyIndex].instruction;
         $('.county').append($(`<option class="countyInputOption" val="${infoID.replace(/\s/g, '')}">${infoID}</option>`));
-        const weatherAlertGenerator = `<div class="alertInfo hidden" id="${infoID.replace(/\s/g, '')}"><h1 class="weatherText">${STORE[countyIndex].headline}</h1><p>${STORE[countyIndex].description}</p><p>${STORE[countyIndex].instruction}</p></div>`;
-        $('.weatherAlert').append(weatherAlertGenerator);
+        const weatherAlertGenerator = `<div class="alertInfo hidden" id="${infoID.replace(/\s/g, '')}"><h1 class="weatherText">${STORE[countyIndex].headline}</h1><p>${countyDesc}</p><p>${countyInst}</p></div>`;
+        $('.weatherAlert').append(weatherAlertGenerator.replace("null", ""));
     };
         
         $(`#countyInput`).change(function() {
