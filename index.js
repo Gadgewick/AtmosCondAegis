@@ -137,17 +137,20 @@ function countySearch() {
     for (let i=0; i < STORE.length; i++) {
         var countyIndex = i;
         var infoID= STORE[countyIndex].county;
-        $('.county').append($(`<option class="countyInputOption" val="${infoID}">${infoID}</option>`));
-        var weatherAlertGenerator = `<div class="alertInfo hidden" id="${infoID}"><h1 class="secondHeadlineText">${STORE[countyIndex].headline}</h1><p>${STORE[countyIndex].description}</p><p>${STORE[countyIndex].instruction}</p></div>`;
+        $('.county').append($(`<option class="countyInputOption" val="${infoID.replace(/\s/g, '')}">${infoID}</option>`));
+        var weatherAlertGenerator = `<div class="alertInfo hidden" id="${infoID.replace(/\s/g, '')}"><h1 class="secondHeadlineText">${STORE[countyIndex].headline}</h1><p>${STORE[countyIndex].description}</p><p>${STORE[countyIndex].instruction}</p></div>`;
         $('.weatherAlert').append(weatherAlertGenerator);
+        console.log(infoID.replace(/\s/g, ''));
     };
-
+        $('.alertInfo').hide();
         $(`#countyInput`).change(function() {
             var countySelected = $("#countyInput option:selected").val();
             console.log(countySelected);
+            var weatherShow = document.getElementById(`${countySelected}`);
+            console.log(weatherShow);
                 if(countySelected) {
-                    $(".alertInfo").not("#" +countySelected).hide();
-                    $("#" +countySelected).show();
+                    $(".alertInfo").hide();
+                    $(weatherShow).show();
                 } else{
                     $(".alertInfo").hide();
                 }
